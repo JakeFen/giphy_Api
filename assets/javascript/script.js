@@ -2,33 +2,68 @@ $(document).ready(function() {
   var animalArr = [
     "Dog",
     "Cat",
-    "Bird",
     "Penguin",
     "Tiger",
-    "Elephant",
-    "GroundHog",
-    "Snake"
   ];
 
+  // Loops threw animalArr and prints them to the screen as buttons
   var buttonLoop = function() {
+    $(".button-holder").empty();
+
     for (var i = 0; i < animalArr.length; i++) {
       $(".button-holder").append(
-        "<button value=" + animalArr[i] + ">" + animalArr[i] + "</button>"
+        "<button class='arr-animal' value=" + animalArr[i] + ">" + animalArr[i] + "</button>"
       );
     }
   };
   buttonLoop();
 
-  $("button").on("click", function() {
+  // When submit button is clicked push the Value into the array and print to screen
+  $(".submit-animal").on("click", function(event) {
+
+    event.preventDefault();
+
+    var guestsAnimal = $(".input-animal").val();
+    animalArr.push(guestsAnimal);
+    buttonLoop();
+    $(".input-animal").val("");
+  })
+
+
+// Pulls data from API and does something with it
+  var animalAPI = function() {
     var animal = $(this).val();
     var queryURL =
-      "https://api.giphy.com/v1/gifs/search?api_key=3RjbOTb1kbvbW9wH33x7c75KHCUUMjWa&q=" +
+      "https://api.giphy.com/v1/gifs/search?api_key=3RjbOTb1kbvbW9wH33x7c75KHCUUMjWa&q=" + $(this).val();
       animal;
     $.ajax({
       url: queryURL,
       method: "GET"
     }).then(function(response) {
-      console.log(response);
+      $(".image-holder").empty();
+
+      for(var i = 0; i < 10; i++) {
+        var animalStill = response.data[i].images.fixed_height_still.url;
+        var animalAnimate = response.data[i].images.fixed_height.url;
+
+        $(".image-holder").append("<img class='gif' src='" + animalStill + "' data-still='" + animalStill + "' data-animate='" + animalAnimate + "' data-state='still'>");
+      }
+
+      // switches still image to animated image and back
+      $(".gif").on("click", function() {
+        var state = $(this).attr("data-state");
+    
+        if(state === "still") {
+          $(this).attr("src", $(this).attr("data-animate"));
+          $(this).attr("data-state", "animate")
+        } else {
+          $(this).attr("src", $(this).attr("data-still"));
+          $(this).attr("data-state", "still")
+        }
+      });
     });
-  });
+  };
+
+  // when anything with class arr-animal is clicked run the variable animalAPI
+  $(document).on("click", ".arr-animal", animalAPI);
 });
