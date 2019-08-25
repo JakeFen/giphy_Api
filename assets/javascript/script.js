@@ -12,7 +12,7 @@ $(document).ready(function() {
 
     for (var i = 0; i < animalArr.length; i++) {
       $(".button-holder").append(
-        "<button class='arr-animal' value=" + animalArr[i] + ">" + animalArr[i] + "</button>"
+        "<button class='arr-animal m-1' value=" + animalArr[i] + ">" + animalArr[i] + "</button>"
       );
     }
   };
@@ -23,7 +23,7 @@ $(document).ready(function() {
 
     event.preventDefault();
 
-    var guestsAnimal = $(".input-animal").val();
+    var guestsAnimal = $(".input-animal").val().trim();
     animalArr.push(guestsAnimal);
     buttonLoop();
     $(".input-animal").val("");
@@ -43,10 +43,12 @@ $(document).ready(function() {
       $(".image-holder").empty();
 
       for(var i = 0; i < 10; i++) {
+        var animalRating = response.data[i].rating;
         var animalStill = response.data[i].images.fixed_height_still.url;
         var animalAnimate = response.data[i].images.fixed_height.url;
-
-        $(".image-holder").append("<img class='gif' src='" + animalStill + "' data-still='" + animalStill + "' data-animate='" + animalAnimate + "' data-state='still'>");
+        // creating rating for images
+        $(".image-holder")
+        $(".image-holder").append("<img class='gif p-2' src='" + animalStill + "' data-still='" + animalStill + "' data-animate='" + animalAnimate + "' data-state='still'>");
       }
 
       // switches still image to animated image and back
