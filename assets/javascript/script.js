@@ -44,11 +44,15 @@ $(document).ready(function() {
 
       for(var i = 0; i < 10; i++) {
         var animalRating = response.data[i].rating;
+        var imageDiv = $("<div class='p-2'>");
         var animalStill = response.data[i].images.fixed_height_still.url;
         var animalAnimate = response.data[i].images.fixed_height.url;
         // creating rating for images
-        $(".image-holder")
-        $(".image-holder").append("<img class='gif p-2' src='" + animalStill + "' data-still='" + animalStill + "' data-animate='" + animalAnimate + "' data-state='still'>");
+        
+        $(".image-holder").append(imageDiv);
+        $(imageDiv).append("<p>" + animalRating + "</p><img class='gif' src='" + animalStill + "' data-still='" + animalStill + "' data-animate='" + animalAnimate + "' data-state='still'>");
+        $(".image-holder").append();
+
       }
 
       // switches still image to animated image and back
