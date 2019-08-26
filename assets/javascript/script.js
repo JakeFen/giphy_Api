@@ -50,7 +50,7 @@ $(document).ready(function() {
         // creating rating for images
         
         $(".image-holder").append(imageDiv);
-        $(imageDiv).append("<p>" + animalRating + "</p><img class='gif' src='" + animalStill + "' data-still='" + animalStill + "' data-animate='" + animalAnimate + "' data-state='still'>");
+        $(imageDiv).append("<p>Rating: " + animalRating + "</p><img class='gif' src='" + animalStill + "' data-still='" + animalStill + "' data-animate='" + animalAnimate + "' data-state='still'>");
         $(".image-holder").append();
 
       }
